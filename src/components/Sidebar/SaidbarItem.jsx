@@ -3,7 +3,7 @@ import { ApiContext } from "../../context/ApiContext";
 
 export const SaidbarItem = () => {
   const [notes, setNotes] = useState([]);
-  const { setId, setAddPostToggle, getNotes, setUpdateToggle } =
+  const { setId, setAddPostToggle, getNotes, setUpdateToggle, filter } =
     useContext(ApiContext);
 
   useEffect(() => {
@@ -21,10 +21,21 @@ export const SaidbarItem = () => {
     };
     getNotesRequest();
   }, [getNotes]);
-  console.log(notes);
+
+  const FindContact = () => {
+    const normalizedfilter = filter.toLowerCase();
+
+    return notes.filter((contact) =>
+      contact.values.ahj8kabsvcIPhcGxeWWQXB
+        .toLowerCase()
+        .includes(normalizedfilter)
+    );
+  };
+  const filterNotece = FindContact();
+
   return (
     <>
-      {notes.map(({ id, created_at, values }) => {
+      {filterNotece.map(({ id, created_at, values }) => {
         return (
           <li key={id} className="sidebar__section-item">
             <div

@@ -9,6 +9,7 @@ export const SearchBox = () => {
     addPostToggle,
     setModalToggle,
     id,
+    setFilter,
   } = useContext(ApiContext);
   return (
     <header className="search-box">
@@ -42,7 +43,7 @@ export const SearchBox = () => {
           remove post
         </button>
       </div>
-      <input type="text" />
+      <input type="text" onChange={(e) => setFilter(e.target.value)} />
     </header>
   );
 };

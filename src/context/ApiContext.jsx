@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 export const ApiContext = createContext();
-// https://quintadb.com.ua/apps/dcN0yRf8ndW6hcTYnwyfXf/dtypes/entity/c6WPVcMsvcOOobw0ZcH8kY.json?rest_api_key=ddS8kPAs5bAPRdU048y2XY&amp;view=
+
 export const ApiProvider = ({ children }) => {
   const [id, setId] = useState(null);
   const [createPostToggle, setCreatePostToggle] = useState(false);
@@ -18,9 +18,11 @@ export const ApiProvider = ({ children }) => {
   const [removePostToggle, setRemovePostToggle] = useState(false);
   const [updateToggle, setUpdateToggle] = useState(false);
   const [modalToggle, setModalToggle] = useState(false);
+  const [filter, setFilter] = useState("");
   console.log(createPostToggle, "createPostToggle");
   console.log(addPostToggle, "addPostToggle");
   console.log(updateToggle, "updateToggle");
+  console.log("filter", filter);
   const getNotes = async () => {
     const result = await instance.get(
       `/dtypes/entity/${VITE_API_DOC}.json?rest_api_key=${apiKey}&view=`
@@ -103,6 +105,8 @@ export const ApiProvider = ({ children }) => {
         setUpdateToggle,
         modalToggle,
         setModalToggle,
+        setFilter,
+        filter,
       }}
     >
       {children}
