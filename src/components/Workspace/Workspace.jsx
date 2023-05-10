@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "../../context/ApiContext";
-
+import Modal from "../Modal/Modal";
+import styles from "./Workspace.module.scss";
 export const Workspace = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
@@ -16,6 +17,8 @@ export const Workspace = () => {
     addNewNote,
     setAddPostToggle,
     updateNote,
+    setRemovePostToggle,
+    setModalToggle,
   } = useContext(ApiContext);
 
   useEffect(() => {
@@ -117,12 +120,6 @@ export const Workspace = () => {
         value={title}
         className="workspace__input"
         onChange={inputChange}
-        // onBlur={() => {
-        //   if (addPostToggle || !id) {
-        //     return;
-        //   }
-        //   setUpdateToggle(true);
-        // }}
         onBlur={handleBlur}
       />
       <textarea
@@ -130,13 +127,32 @@ export const Workspace = () => {
         value={text}
         onChange={textareaChange}
         onBlur={handleBlur}
-        // onBlur={() => {
-        //   if (addPostToggle || !id) {
-        //     return;
-        //   }
-        //   setUpdateToggle(true);
-        // }}
       ></textarea>
+
+      {id && (
+        <Modal>
+          <div className={styles.wrapperBtn}>
+            <h3 className={styles.title}>Are you sure you want to delete?</h3>
+            <div className={styles.wrapper__btnBox}>
+              <button
+                onClick={() => {
+                  setRemovePostToggle(true);
+                  setModalToggle(false);
+                }}
+                className={styles.button}
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setModalToggle(false)}
+                className={styles.button}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

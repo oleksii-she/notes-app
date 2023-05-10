@@ -1,12 +1,14 @@
 import { ApiContext } from "../../context/ApiContext";
 import { useContext } from "react";
+
 export const SearchBox = () => {
   const {
     createPostToggle,
     setCreatePostToggle,
     setAddPostToggle,
     addPostToggle,
-    setRemovePostToggle,
+    setModalToggle,
+    id,
   } = useContext(ApiContext);
   return (
     <header className="search-box">
@@ -33,7 +35,12 @@ export const SearchBox = () => {
           create post
         </button>
 
-        <button onClick={() => setRemovePostToggle(true)}>remove post</button>
+        <button
+          onClick={() => setModalToggle(true)}
+          disabled={id ? false : true}
+        >
+          remove post
+        </button>
       </div>
       <input type="text" />
     </header>

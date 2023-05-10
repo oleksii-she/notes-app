@@ -17,6 +17,7 @@ export const ApiProvider = ({ children }) => {
   const [addPostToggle, setAddPostToggle] = useState(false);
   const [removePostToggle, setRemovePostToggle] = useState(false);
   const [updateToggle, setUpdateToggle] = useState(false);
+  const [modalToggle, setModalToggle] = useState(false);
   console.log(createPostToggle, "createPostToggle");
   console.log(addPostToggle, "addPostToggle");
   console.log(updateToggle, "updateToggle");
@@ -100,6 +101,8 @@ export const ApiProvider = ({ children }) => {
         setRemovePostToggle,
         updateNote,
         setUpdateToggle,
+        modalToggle,
+        setModalToggle,
       }}
     >
       {children}
