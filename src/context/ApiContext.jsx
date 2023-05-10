@@ -3,32 +3,105 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 const apiKey = import.meta.env.VITE_API_KEY;
+const { VITE_API_CATALOG, VITE_API_DOC } = import.meta.env;
 
 const instance = axios.create({
-  baseURL: `https://quintadb.com.ua/apps/${apiKey}/dtypes`,
+  baseURL: `https://quintadb.com.ua/apps/${VITE_API_CATALOG}`,
 });
 
 export const ApiContext = createContext();
-
+// https://quintadb.com.ua/apps/dcN0yRf8ndW6hcTYnwyfXf/dtypes/entity/c6WPVcMsvcOOobw0ZcH8kY.json?rest_api_key=ddS8kPAs5bAPRdU048y2XY&amp;view=
 export const ApiProvider = ({ children }) => {
   const [id, setId] = useState(null);
-
+  const [createPostToggle, setCreatePostToggle] = useState(false);
+  const [addPostToggle, setAddPostToggle] = useState(false);
+  const [removePostToggle, setRemovePostToggle] = useState(false);
+  const [updateToggle, setUpdateToggle] = useState(false);
+  console.log(createPostToggle, "createPostToggle");
+  console.log(addPostToggle, "addPostToggle");
+  console.log(updateToggle, "updateToggle");
   const getNotes = async () => {
     const result = await instance.get(
-      "entity/dcVmoYFSjay6FcHNhcN8k9.json?rest_api_key=bOqw5GqHPdPOobWOXhnSkY&"
+      `/dtypes/entity/${VITE_API_DOC}.json?rest_api_key=${apiKey}&view=`
     );
     return result;
   };
 
-  const getNotesId = async (id) => {
+  const getNoteId = async (id) => {
     const result = await instance.get(
-      `${id}.json?rest_api_key=bOqw5GqHPdPOobWOXhnSkY`
+      `/dtypes/${id}.json?rest_api_key=${apiKey}`
     );
     return result;
   };
+
+  const addNewNote = async (newData) => {
+    try {
+      if (!createPostToggle) {
+        console.log("Oops createPostToggle");
+        return;
+      }
+      console.log(newData);
+      const result = await instance.post(
+        `/dtypes.json?rest_api_key=${apiKey}`,
+        { ...newData },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setId(result.data.record.id);
+      setAddPostToggle(false);
+      setCreatePostToggle(false);
+    } catch (error) {
+      setCreatePostToggle(false);
+      console.log(error.message);
+    }
+  };
+
+  const updateNote = async (data) => {
+    try {
+      await instance.put(`/dtypes/${id}.json?rest_api_key=${apiKey}`, {
+        ...data,
+      });
+      setUpdateToggle(false);
+    } catch (error) {
+      setUpdateToggle(false);
+      console.log(error.message);
+    }
+  };
+
+  const removeNoteId = async (id) => {
+    try {
+      if (!removePostToggle) {
+        return;
+      }
+      await instance.delete(`dtypes/${id}.json?rest_api_key=${apiKey}`);
+
+      setRemovePostToggle(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  removeNoteId(id);
 
   return (
-    <ApiContext.Provider value={{ getNotes, getNotesId, setId, id }}>
+    <ApiContext.Provider
+      value={{
+        getNotes,
+        getNoteId,
+        setId,
+        id,
+        createPostToggle,
+        setCreatePostToggle,
+        setAddPostToggle,
+        addPostToggle,
+        addNewNote,
+        setRemovePostToggle,
+        updateNote,
+        setUpdateToggle,
+      }}
+    >
       {children}
     </ApiContext.Provider>
   );

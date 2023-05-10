@@ -1,16 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "../../context/ApiContext";
+
 export const SaidbarItem = () => {
   const [notes, setNotes] = useState([]);
-  // const [id, setId] = useState(null);
+  const { setId, setAddPostToggle, getNotes, setUpdateToggle } =
+    useContext(ApiContext);
 
-  const { getNotes, getNotesId, setId } = useContext(ApiContext);
   useEffect(() => {
     const getNotesRequest = async () => {
       try {
         const { data } = await getNotes();
         if (data.records.length <= 0) {
-          return console.log("Oops");
+          return;
         } else {
           setNotes(data.records);
         }
@@ -19,19 +20,24 @@ export const SaidbarItem = () => {
       }
     };
     getNotesRequest();
-  }, [getNotes, getNotesId]);
-
+  }, [getNotes]);
+  console.log(notes);
   return (
     <>
       {notes.map(({ id, created_at, values }) => {
         return (
           <li key={id} className="sidebar__section-item">
-            <div onClick={() => setId(id)}>
+            <div
+              onClick={() => {
+                setId(id), setAddPostToggle(false);
+                setUpdateToggle(true);
+              }}
+            >
               <div>
                 <p>{created_at}</p>
               </div>
               <div>
-                <p>{values.cLebz1dNfma4kwF2iHssuh}</p>
+                <p>{values.ahj8kabsvcIPhcGxeWWQXB}</p>
               </div>
             </div>
           </li>
