@@ -1,13 +1,9 @@
+import instance from "../utils/axios";
 import { createContext, useState } from "react";
-import axios from "axios";
+
 import PropTypes from "prop-types";
 
-const apiKey = import.meta.env.VITE_API_KEY;
-const { VITE_API_CATALOG, VITE_API_DOC } = import.meta.env;
-
-const instance = axios.create({
-  baseURL: `https://quintadb.com.ua/apps/${VITE_API_CATALOG}`,
-});
+const { VITE_API_DOC, VITE_API_KEY } = import.meta.env;
 
 export const ApiContext = createContext();
 
@@ -16,23 +12,21 @@ export const ApiProvider = ({ children }) => {
   const [createPostToggle, setCreatePostToggle] = useState(false);
   const [addPostToggle, setAddPostToggle] = useState(false);
   const [removePostToggle, setRemovePostToggle] = useState(false);
-  const [updateToggle, setUpdateToggle] = useState(false);
   const [modalToggle, setModalToggle] = useState(false);
   const [filter, setFilter] = useState("");
-  console.log(createPostToggle, "createPostToggle");
-  console.log(addPostToggle, "addPostToggle");
-  console.log(updateToggle, "updateToggle");
-  console.log("filter", filter);
+  const [sidebarToggle, setSidebarToggle] = useState(true);
+
+  const mobToggleSidebar = () => setSidebarToggle(!sidebarToggle);
   const getNotes = async () => {
     const result = await instance.get(
-      `/dtypes/entity/${VITE_API_DOC}.json?rest_api_key=${apiKey}&view=`
+      `/dtypes/entity/${VITE_API_DOC}.json?rest_api_key=${VITE_API_KEY}&view=`
     );
     return result;
   };
 
   const getNoteId = async (id) => {
     const result = await instance.get(
-      `/dtypes/${id}.json?rest_api_key=${apiKey}`
+      `/dtypes/${id}.json?rest_api_key=${VITE_API_KEY}`
     );
     return result;
   };
@@ -40,12 +34,10 @@ export const ApiProvider = ({ children }) => {
   const addNewNote = async (newData) => {
     try {
       if (!createPostToggle) {
-        console.log("Oops createPostToggle");
         return;
       }
-      console.log(newData, "newData");
       const result = await instance.post(
-        `/dtypes.json?rest_api_key=${apiKey}`,
+        `/dtypes.json?rest_api_key=${VITE_API_KEY}`,
         { ...newData },
         {
           headers: {
@@ -64,12 +56,10 @@ export const ApiProvider = ({ children }) => {
 
   const updateNote = async (data) => {
     try {
-      await instance.put(`/dtypes/${id}.json?rest_api_key=${apiKey}`, {
+      await instance.put(`/dtypes/${id}.json?rest_api_key=${VITE_API_KEY}`, {
         ...data,
       });
-      setUpdateToggle(false);
     } catch (error) {
-      setUpdateToggle(false);
       console.log(error.message);
     }
   };
@@ -79,15 +69,15 @@ export const ApiProvider = ({ children }) => {
       if (!removePostToggle) {
         return;
       }
-      await instance.delete(`dtypes/${id}.json?rest_api_key=${apiKey}`);
+      await instance.delete(`dtypes/${id}.json?rest_api_key=${VITE_API_KEY}`);
 
       setRemovePostToggle(false);
     } catch (error) {
       console.log(error.message);
     }
   };
-  removeNoteId(id);
 
+  removeNoteId(id);
   return (
     <ApiContext.Provider
       value={{
@@ -102,11 +92,12 @@ export const ApiProvider = ({ children }) => {
         addNewNote,
         setRemovePostToggle,
         updateNote,
-        setUpdateToggle,
         modalToggle,
         setModalToggle,
         setFilter,
         filter,
+        mobToggleSidebar,
+        sidebarToggle,
       }}
     >
       {children}

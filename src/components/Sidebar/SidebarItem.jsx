@@ -9,7 +9,6 @@ export const SidebarItem = () => {
     setId,
     setAddPostToggle,
     getNotes,
-    setUpdateToggle,
     filter,
     id: activeId,
   } = useContext(ApiContext);
@@ -21,7 +20,6 @@ export const SidebarItem = () => {
         if (data.records.length <= 0) {
           return;
         } else {
-          console.log(data);
           setNotes(data.records);
         }
       } catch (error) {
@@ -40,20 +38,31 @@ export const SidebarItem = () => {
         .includes(normalizedfilter)
     );
   };
-  const filterNotece = FindContact();
-
-  console.log(filterNotece);
+  const filterNotice = FindContact();
 
   return (
     <>
-      {filterNotece.map(({ id, updated_at, values }) => {
+      <li className={styles.sidebar__item}>
+        <div className={`${styles.sidebar__link} `}>
+          <div>
+            <h3 className={`${styles.sidebar__item_title}`}>asdasda</h3>
+          </div>
+          <div>
+            <p className={styles.sidebar__item_text}>
+              asdasdas
+              <span className={styles.sidebar__item_text_span}>asdasdas</span>
+            </p>
+          </div>
+        </div>
+      </li>
+      {filterNotice.map(({ id, updated_at, values }) => {
         const isActive = activeId === id;
+
         return (
           <li key={id} className={styles.sidebar__item}>
             <div
               onClick={() => {
                 setId(id), setAddPostToggle(false);
-                setUpdateToggle(true);
               }}
               className={
                 isActive
@@ -69,7 +78,9 @@ export const SidebarItem = () => {
               <div>
                 <p className={styles.sidebar__item_text}>
                   {format(new Date(updated_at), "H:m a")}
-                  <span>{values.ddRe_cGtrcg4RcNSoTWOay}</span>
+                  <span className={styles.sidebar__item_text_span}>
+                    {values.ddRe_cGtrcg4RcNSoTWOay}
+                  </span>
                 </p>
               </div>
             </div>

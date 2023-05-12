@@ -8,17 +8,17 @@ const Modal = ({ children }) => {
   const { modalToggle, setModalToggle } = useContext(ApiContext);
 
   useEffect(() => {
-    window.addEventListener("keydown", hendleKeyDown);
-    function hendleKeyDown(e) {
+    window.addEventListener("keydown", handlerKeyDown);
+    function handlerKeyDown(e) {
       if (e.code === "Escape") {
         setModalToggle(false);
       }
     }
 
     return () => {
-      window.removeEventListener("keydown", hendleKeyDown);
+      window.removeEventListener("keydown", handlerKeyDown);
     };
-  }, []);
+  }, [setModalToggle]);
 
   function onCloseOverlay(e) {
     if (e.target === e.currentTarget) {

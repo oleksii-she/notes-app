@@ -10,7 +10,7 @@ export const Layout = ({ children }) => {
       </Container>
       <section>
         <Container>
-          <div className={styles.layout}>{children}</div>
+          <div className={`${styles.layout}   `}>{children}</div>
         </Container>
       </section>
     </>

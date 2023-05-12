@@ -3,11 +3,14 @@ import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "../../context/ApiContext";
 import Modal from "../Modal/Modal";
 import styles from "./Workspace.module.scss";
-const { VITE_API_ENTIPY } = import.meta.env;
+import { Burger } from "../Burger/Burger";
+import { useMatchMedia } from "../../hooks/useMatcMedia";
+const { VITE_API_ENTITY } = import.meta.env;
 export const Workspace = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [dataTime, setDataTime] = useState("");
+  const { isMobile } = useMatchMedia();
 
   const {
     id,
@@ -39,9 +42,8 @@ export const Workspace = () => {
         }
 
         const { data } = await getNoteId(id);
-        console.log(data);
         const result = data.record;
-        console.log(result.updated_at, "result.updated_at");
+
         if (!result) {
           return;
         }
@@ -56,14 +58,15 @@ export const Workspace = () => {
       }
     };
     getNoteIdsRequest();
-  }, [id, getNoteId, addPostToggle]);
-
-  const inputChange = (e) => {
-    setTitle(e.target.value);
-  };
+  }, [id, getNoteId, addPostToggle, setId]);
 
   const textareaChange = (e) => {
-    setText(e.target.value);
+    const name = e.currentTarget.name;
+    if (name === "title") {
+      setTitle(e.target.value);
+    } else {
+      setText(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -74,7 +77,7 @@ export const Workspace = () => {
         }
 
         const dataCreatePost = {
-          entity_id: VITE_API_ENTIPY,
+          entity_id: VITE_API_ENTITY,
           values: {
             ddRe_cGtrcg4RcNSoTWOay: text,
             agA0ZdNh5cQ4oHBCojvSoI: title,
@@ -108,7 +111,7 @@ export const Workspace = () => {
     if (id) {
       const newData = {
         id,
-        entity_id: VITE_API_ENTIPY,
+        entity_id: VITE_API_ENTITY,
         values: {
           ddRe_cGtrcg4RcNSoTWOay: text,
           agA0ZdNh5cQ4oHBCojvSoI: title,
@@ -119,17 +122,25 @@ export const Workspace = () => {
       return;
     }
   };
+
   return (
     <div className={styles.workspace}>
+      {isMobile && <Burger />}
       <p className={styles.workspace__data_text}>{dataTime}</p>
-      <input
-        type="text"
-        value={title}
-        className={styles.workspace__input}
-        onChange={inputChange}
-        onBlur={handleBlur}
+
+      <textarea
         placeholder="Name"
-      />
+        name="title"
+        className={styles.workspace__title}
+        onChange={textareaChange}
+        onBlur={handleBlur}
+        value={title}
+        maxLength={100}
+      ></textarea>
+
+      {title.length === 100 && (
+        <p style={{ color: "red" }}>Maximum characters limit reached!</p>
+      )}
       <textarea
         className={styles.workspace__text}
         value={text}

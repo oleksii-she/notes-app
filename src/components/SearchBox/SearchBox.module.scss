@@ -51,10 +51,6 @@
   }
 }
 
-// input[type="text"]::placeholder + .search_box__icon {
-//   display: block; /* Hide the icon when the placeholder is visible */
-// }
-
 .input_search {
   padding: 2px 15px;
   cursor: pointer;
@@ -66,16 +62,12 @@
 
   &:placeholder-shown,
   .search_box__icon {
-    display: block; /* Hide the icon when the placeholder is visible */
+    display: block;
   }
 
   &:placeholder-shown {
     text-align: center;
   }
-  // &:placeholder,
-  // .search_box__icon {
-  //   display: none; /* Hide the icon when the placeholder is visible */
-  // }
   &:hover,
   &:focus {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
