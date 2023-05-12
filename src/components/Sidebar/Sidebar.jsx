@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { useMatchMedia } from "../../hooks/useMatcMedia";
 export const Sidebar = () => {
-  const { sidebarToggle, setSidebarToggle } = useContext(Context);
+  const { sidebarToggle } = useContext(Context);
   const { isMobile } = useMatchMedia();
 
   return (
