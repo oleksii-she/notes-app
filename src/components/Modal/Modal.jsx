@@ -2,10 +2,10 @@ import { PropTypes } from "prop-types";
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.scss";
 import { useContext, useEffect } from "react";
-import { ApiContext } from "../../context/ApiContext";
+import { Context } from "../../context/Context";
 const modalRoot = document.querySelector("#modal-root");
 const Modal = ({ children }) => {
-  const { modalToggle, setModalToggle } = useContext(ApiContext);
+  const { modalToggle, setModalToggle } = useContext(Context);
 
   useEffect(() => {
     window.addEventListener("keydown", handlerKeyDown);

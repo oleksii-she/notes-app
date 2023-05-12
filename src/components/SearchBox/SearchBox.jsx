@@ -1,7 +1,7 @@
-import { ApiContext } from "../../context/ApiContext";
 import { useContext } from "react";
 import styles from "./SearchBox.module.scss";
 import { useState } from "react";
+import { Context } from "../../context/Context";
 import {
   SearchIcon,
   RemoveIcon,
@@ -18,7 +18,7 @@ export const SearchBox = () => {
     setModalToggle,
     id,
     setFilter,
-  } = useContext(ApiContext);
+  } = useContext(Context);
   return (
     <header className={styles.header}>
       <div className={styles.button_box}>

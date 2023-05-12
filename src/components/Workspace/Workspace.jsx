@@ -1,10 +1,12 @@
 import { format } from "date-fns";
 import { useContext, useEffect, useState } from "react";
-import { ApiContext } from "../../context/ApiContext";
-import Modal from "../Modal/Modal";
+import { Context } from "../../context/Context";
 import styles from "./Workspace.module.scss";
+import { getNoteId, addNewNote, updateNote } from "../../api";
 import { Burger } from "../Burger/Burger";
 import { useMatchMedia } from "../../hooks/useMatcMedia";
+import { WarningDelete } from "../warningDelete/warningDelete";
+
 const { VITE_API_ENTITY } = import.meta.env;
 export const Workspace = () => {
   const [title, setTitle] = useState("");
@@ -15,17 +17,15 @@ export const Workspace = () => {
   const {
     id,
     setId,
-    getNoteId,
     createPostToggle,
     addPostToggle,
     setCreatePostToggle,
-    addNewNote,
     setAddPostToggle,
-    updateNote,
-    setRemovePostToggle,
-    setModalToggle,
     modalToggle,
-  } = useContext(ApiContext);
+    setNotes,
+    filterNotice,
+    setSidebarToggle,
+  } = useContext(Context);
 
   useEffect(() => {
     const getNoteIdsRequest = async () => {
@@ -51,14 +51,14 @@ export const Workspace = () => {
         setDataTime(
           format(new Date(result.updated_at), "MMMM d yyyy, 'at' H:m a")
         );
-        setText(result.values.ddRe_cGtrcg4RcNSoTWOay);
-        setTitle(result.values.agA0ZdNh5cQ4oHBCojvSoI);
+        setTitle(result.values.cYgX_dVCnhBioHc8o2W4rH);
+        setText(result.values.cdW5pdGq1oW43dOSoLW6iy);
       } catch (error) {
         console.log(error.message);
       }
     };
     getNoteIdsRequest();
-  }, [id, getNoteId, addPostToggle, setId]);
+  }, [id, addPostToggle, setId]);
 
   const textareaChange = (e) => {
     const name = e.currentTarget.name;
@@ -79,32 +79,38 @@ export const Workspace = () => {
         const dataCreatePost = {
           entity_id: VITE_API_ENTITY,
           values: {
-            ddRe_cGtrcg4RcNSoTWOay: text,
-            agA0ZdNh5cQ4oHBCojvSoI: title,
+            cYgX_dVCnhBioHc8o2W4rH: title,
+            cdW5pdGq1oW43dOSoLW6iy: text,
           },
         };
 
         if (createPostToggle) {
-          await addNewNote(dataCreatePost);
-
+          const result = await addNewNote(dataCreatePost);
+          console.log(result.data.record);
+          setId(result.data.record.id);
+          setAddPostToggle(false);
           setCreatePostToggle(false);
+          setNotes((prevState) => [result.data.record, ...prevState]);
+
           return;
         }
       } catch (error) {
         console.log(error.message);
+        setCreatePostToggle(false);
       }
     };
 
     createPost();
   }, [
     createPostToggle,
-    addNewNote,
     title,
     text,
     setCreatePostToggle,
     addPostToggle,
     setAddPostToggle,
     id,
+    setId,
+    setNotes,
   ]);
 
   const handleBlur = async () => {
@@ -113,14 +119,27 @@ export const Workspace = () => {
         id,
         entity_id: VITE_API_ENTITY,
         values: {
-          ddRe_cGtrcg4RcNSoTWOay: text,
-          agA0ZdNh5cQ4oHBCojvSoI: title,
+          cYgX_dVCnhBioHc8o2W4rH: title,
+          cdW5pdGq1oW43dOSoLW6iy: text,
         },
       };
-      await updateNote(newData);
+      const result = await updateNote(id, newData);
+
+      const update = filterNotice.map((el) => {
+        if (el.id === result.data.record.id) {
+          return { ...el, ...result.data.record };
+        }
+        return el;
+      });
+
+      setNotes(update);
     } else {
       return;
     }
+  };
+
+  const handleClick = () => {
+    setSidebarToggle(true);
   };
 
   return (
@@ -133,9 +152,10 @@ export const Workspace = () => {
         name="title"
         className={styles.workspace__title}
         onChange={textareaChange}
-        onBlur={handleBlur}
+        onBlur={() => handleBlur()}
         value={title}
         maxLength={100}
+        onClick={handleClick}
       ></textarea>
 
       {title.length === 100 && (
@@ -145,34 +165,12 @@ export const Workspace = () => {
         className={styles.workspace__text}
         value={text}
         onChange={textareaChange}
-        onBlur={handleBlur}
+        onBlur={() => handleBlur()}
         placeholder="Description"
+        onClick={handleClick}
       ></textarea>
 
-      {modalToggle && (
-        <Modal>
-          <div className={styles.wrapperBtn}>
-            <h3 className={styles.title}>Are you sure you want to delete?</h3>
-            <div className={styles.wrapper__btnBox}>
-              <button
-                onClick={() => {
-                  setRemovePostToggle(true);
-                  setModalToggle(false);
-                }}
-                className={styles.button}
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => setModalToggle(false)}
-                className={styles.button}
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </Modal>
-      )}
+      {modalToggle && <WarningDelete />}
     </div>
   );
 };

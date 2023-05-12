@@ -1,13 +1,12 @@
 import { SidebarItem } from "./SidebarItem";
 import styles from "./Sidebar.module.scss";
 import { useContext } from "react";
-import { ApiContext } from "../../context/ApiContext";
+import { Context } from "../../context/Context";
 import { useMatchMedia } from "../../hooks/useMatcMedia";
 export const Sidebar = () => {
-  const { sidebarToggle } = useContext(ApiContext);
-
+  const { sidebarToggle, setSidebarToggle } = useContext(Context);
   const { isMobile } = useMatchMedia();
-  console.log(isMobile);
+
   return (
     <aside
       className={

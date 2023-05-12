@@ -1,18 +1,20 @@
 import { useContext } from "react";
-import { ApiContext } from "../../context/ApiContext";
+import { Context } from "../../context/Context";
 import styles from "./Burger.module.scss";
 
 export const Burger = () => {
-  const { sidebarToggle, mobToggleSidebar } = useContext(ApiContext);
+  const { sidebarToggle, mobToggleSidebar } = useContext(Context);
 
   return (
-    <div
+    <button
       className={`${styles.burger} ${!sidebarToggle ? styles.open : ""}`}
-      onClick={() => mobToggleSidebar()}
+      onClick={() => {
+        mobToggleSidebar();
+      }}
     >
       <span className={styles.burger__span}></span>
       <span className={styles.burger__span}></span>
       <span className={styles.burger__span}></span>
-    </div>
+    </button>
   );
 };
