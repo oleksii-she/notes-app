@@ -4,7 +4,7 @@ import { Context } from "../../context/Context";
 import styles from "./Workspace.module.scss";
 import { getNoteId, addNewNote, updateNote } from "../../api";
 import { Burger } from "../Burger/Burger";
-import { useMatchMedia } from "../../hooks/useMatcMedia";
+import { useMatchMedia } from "../../hooks/useMatchMedia";
 import { WarningDelete } from "../warningDelete/warningDelete";
 
 const { VITE_API_ENTITY } = import.meta.env;
@@ -51,8 +51,8 @@ export const Workspace = () => {
         setDataTime(
           format(new Date(result.updated_at), "MMMM d yyyy, 'at' H:m a")
         );
-        setTitle(result.values.cYgX_dVCnhBioHc8o2W4rH);
-        setText(result.values.cdW5pdGq1oW43dOSoLW6iy);
+        setTitle(result.values.bDW4ftExncWQZcTmkqW7f1);
+        setText(result.values.b2WQzCarrifiklW68sDCkD);
       } catch (error) {
         console.log(error.message);
       }
@@ -79,8 +79,8 @@ export const Workspace = () => {
         const dataCreatePost = {
           entity_id: VITE_API_ENTITY,
           values: {
-            cYgX_dVCnhBioHc8o2W4rH: title,
-            cdW5pdGq1oW43dOSoLW6iy: text,
+            bDW4ftExncWQZcTmkqW7f1: title,
+            b2WQzCarrifiklW68sDCkD: text,
           },
         };
 
@@ -119,8 +119,8 @@ export const Workspace = () => {
         id,
         entity_id: VITE_API_ENTITY,
         values: {
-          cYgX_dVCnhBioHc8o2W4rH: title,
-          cdW5pdGq1oW43dOSoLW6iy: text,
+          bDW4ftExncWQZcTmkqW7f1: title,
+          b2WQzCarrifiklW68sDCkD: text,
         },
       };
       const result = await updateNote(id, newData);

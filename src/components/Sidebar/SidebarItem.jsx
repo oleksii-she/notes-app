@@ -30,14 +30,14 @@ export const SidebarItem = () => {
             >
               <div>
                 <h3 className={`${styles.sidebar__item_title}`}>
-                  {values.cYgX_dVCnhBioHc8o2W4rH}
+                  {values.bDW4ftExncWQZcTmkqW7f1}
                 </h3>
               </div>
               <div>
                 <p className={styles.sidebar__item_text}>
                   {format(new Date(updated_at), "H:m a")}
                   <span className={styles.sidebar__item_text_span}>
-                    {values.cdW5pdGq1oW43dOSoLW6iy}
+                    {values.b2WQzCarrifiklW68sDCkD}
                   </span>
                 </p>
               </div>

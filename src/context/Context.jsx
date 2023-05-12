@@ -36,7 +36,7 @@ export const ContextProvider = ({ children }) => {
 
     if (notes.length > 0) {
       return notes.filter((contact) =>
-        contact.values.cYgX_dVCnhBioHc8o2W4rH
+        contact.values.bDW4ftExncWQZcTmkqW7f1
           .toLowerCase()
           .includes(normalizedfilter)
       );

@@ -2,7 +2,7 @@ import { SidebarItem } from "./SidebarItem";
 import styles from "./Sidebar.module.scss";
 import { useContext } from "react";
 import { Context } from "../../context/Context";
-import { useMatchMedia } from "../../hooks/useMatcMedia";
+import { useMatchMedia } from "../../hooks/useMatchMedia";
 export const Sidebar = () => {
   const { sidebarToggle } = useContext(Context);
   const { isMobile } = useMatchMedia();
