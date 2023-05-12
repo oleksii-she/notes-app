@@ -1,55 +1,38 @@
 Notes App
-Цей проект є нотатником, що зберігається на QuintaDB.
+Це додаток для зберігання та організації нотаток. Всі дані зберігаються на QuintaDB.
 
-Встановлення
-Для початку вам потрібно склонувати цей репозиторій та встановити залежності:
+Функціональні можливості
+Створення, видалення та редагування нотаток
+Можливість зберігати нотатки з різними категоріями
+Пошук та фільтрація нотаток за назвою та категорією
+Технології
+React
+Axios
+Date-fns
+Sass
+Vite
+Інструкції з встановлення
+Спочатку клонуйте репозиторій за допомогою команди:
 
 bash
 Copy code
 git clone https://github.com/oleksii-she/notes-app.git
-cd notes-app
-npm install
-Використання
-Для запуску додатку в режимі розробки використовуйте команду:
+Встановіть залежності за допомогою команди:
 
-bash
+Copy code
+npm install
+Запустіть додаток за допомогою команди:
+
+arduino
 Copy code
 npm run dev
-Для збірки додатку використовуйте команду:
+Відкрийте ваш браузер та перейдіть за адресою http://localhost:5173/notes-app/, щоб побачити додаток.
 
-bash
+Цей проект використовує GitHub Pages для деплойменту. Для деплойменту на власний GitHub Pages обліковий запис, скористайтеся наступними командами:
+
+arduino
 Copy code
 npm run build
-Для запуску локального серверу зі збіркою використовуйте команду:
-
-bash
-Copy code
-npm run preview
-Для деплою на GitHub Pages використовуйте команду:
-
-bash
-Copy code
 npm run deploy
-Залежності
-Цей проект має наступні залежності:
-
-axios
-date-fns
-gh-pages
-react
-react-dom
-sass-loader
-Також, для розробки, залежність devDependencies містить:
-
-@types/react
-@types/react-dom
-@vitejs/plugin-react
-eslint
-eslint-plugin-react
-eslint-plugin-react-hooks
-eslint-plugin-react-refresh
-less
-sass
-stylus
-vite
-vite-plugin-svgr
+Автор
+Олексій Шевченко
