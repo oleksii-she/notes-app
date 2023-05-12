@@ -1,4 +1,35 @@
+.workspace {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 6px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-right: 1px solid $secondary-color;
+  &__data_text {
+    font-size: 14px;
+    line-height: calc(19 / 14);
+    text-align: center;
+    color: $secondary-color;
+    margin-bottom: 8px;
+  }
+  &__input,
+  &__text {
+    outline: none;
+    border: none;
+
+    background-color: inherit;
+  }
+  &__input {
+    margin-bottom: 10px;
+  }
+  &__text {
+    height: 100%;
+  }
+}
+
 .wrapper {
+  padding: 20px;
   width: 300px;
   height: 100px;
 
@@ -25,7 +56,7 @@
   &:hover,
   &:focus {
     transition: cubic-bezier(0.075, 0.82, 0.165, 1);
-    background-color: $main-color;
+    background-color: $activeColor;
     color: $secondary-color;
   }
 }

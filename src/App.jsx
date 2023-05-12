@@ -1,26 +1,15 @@
-import { Container } from "./components/container/Container.jsx";
-import { SearchBox } from "./components/SearchBox/SearchBox.jsx";
 import { Sidebar } from "./components/Sidebar/Sidebar.jsx";
 import { Workspace } from "./components/Workspace/Workspace.jsx";
-
-import "./App.scss";
+import { Layout } from "./components/Layout/Layout.jsx";
 
 const App = () => {
   return (
     <>
-      <Container>
-        <SearchBox></SearchBox>
-      </Container>
+      <Layout>
+        <Sidebar />
 
-      <section>
-        <Container>
-          <div className="layout">
-            <Sidebar />
-
-            <Workspace />
-          </div>
-        </Container>
-      </section>
+        <Workspace />
+      </Layout>
     </>
   );
 };

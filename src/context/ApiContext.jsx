@@ -43,7 +43,7 @@ export const ApiProvider = ({ children }) => {
         console.log("Oops createPostToggle");
         return;
       }
-      console.log(newData);
+      console.log(newData, "newData");
       const result = await instance.post(
         `/dtypes.json?rest_api_key=${apiKey}`,
         { ...newData },

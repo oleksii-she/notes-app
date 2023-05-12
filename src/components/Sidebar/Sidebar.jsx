@@ -1,13 +1,14 @@
-import { SaidbarItem } from "./SaidbarItem";
+import { SidebarItem } from "./SidebarItem";
+import styles from "./Sidebar.module.scss";
 
 export const Sidebar = () => {
   return (
-    <aside className="sidebar">
-      <div className="sidebar__inner">
-        <ul className="sidebar__list">
-          <SaidbarItem />
+    <aside className={styles.sidebar}>
+      <section>
+        <ul className={styles.sidebar__list}>
+          <SidebarItem />
         </ul>
-      </div>
+      </section>
     </aside>
   );
 };

@@ -3,6 +3,7 @@
 body {
   font-family: Montserrat, sans-serif;
   font-weight: 500;
+  margin: 0;
 }
 
 p {
@@ -30,106 +31,4 @@ button {
 
 textarea {
   resize: none;
-}
-
-.sidebar {
-  width: 300px;
-  background-color: #898c8e;
-  &__list {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-  }
-}
-
-// .sidebar {
-//   top: 40px;
-//   left: 0;
-//   bottom: 0;
-//   width: 280px;
-
-//   border-right: 1px solid #dee2e6;
-//   &__inner {
-//     display: flex;
-//     flex-direction: column;
-//     height: 100%;
-//     padding: 20px;
-//     box-sizing: border-box;
-//   }
-
-//   &__section {
-//     margin-bottom: 20px;
-//   }
-
-//   &__section-title {
-//     margin: 0 0 10px;
-//     font-size: 1.2rem;
-//     font-weight: bold;
-//   }
-
-//   &__section-list {
-//     list-style: none;
-//     margin: 0;
-//     padding: 0;
-//   }
-
-//   &__section-item {
-//     margin-bottom: 10px;
-//   }
-
-//   &__section-link {
-//     display: block;
-//     padding: 10px;
-//     text-decoration: none;
-//     color: #212529;
-
-//     &:hover {
-//       background-color: #e9ecef;
-//     }
-//   }
-// }
-
-.layout {
-  display: flex;
-  height: 100vh;
-  // box-sizing: border-box;
-}
-
-.container {
-  position: relative;
-}
-.search-box {
-  background-color: #898c8e;
-  left: 0;
-  z-index: 99;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-
-  &__button-wrapper {
-    display: flex;
-    gap: 10px;
-  }
-}
-
-.workspace {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-top: 20px;
-  &__input,
-  &__text {
-    outline: none;
-    border: none;
-
-    background-color: inherit;
-  }
-  &__input {
-    border-bottom: 1px solid;
-    margin-bottom: 10px;
-  }
-  &__text {
-    height: 100%;
-  }
 }

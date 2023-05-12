@@ -1,8 +1,8 @@
 .container {
   margin: 0 auto;
-  background-color: #898c8e;
+  background-color: $backgroundContainer;
 
-  max-width: 1280px;
+  max-width: 768px;
   box-sizing: border-box;
   position: relative;
 }

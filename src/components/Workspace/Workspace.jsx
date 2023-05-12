@@ -1,15 +1,17 @@
+import { format } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "../../context/ApiContext";
 import Modal from "../Modal/Modal";
 import styles from "./Workspace.module.scss";
+const { VITE_API_ENTIPY } = import.meta.env;
 export const Workspace = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [dataTime, setDataTime] = useState("");
-  // const [newTitle, setNewTitle] = useState("");
-  // const [newText, setNewText] = useState("");
+
   const {
     id,
+    setId,
     getNoteId,
     createPostToggle,
     addPostToggle,
@@ -19,6 +21,7 @@ export const Workspace = () => {
     updateNote,
     setRemovePostToggle,
     setModalToggle,
+    modalToggle,
   } = useContext(ApiContext);
 
   useEffect(() => {
@@ -28,6 +31,7 @@ export const Workspace = () => {
           setTitle("");
           setText("");
           setDataTime("");
+          setId(null);
           return;
         }
         if (!id) {
@@ -35,15 +39,18 @@ export const Workspace = () => {
         }
 
         const { data } = await getNoteId(id);
-
+        console.log(data);
         const result = data.record;
+        console.log(result.updated_at, "result.updated_at");
         if (!result) {
           return;
         }
 
-        setDataTime(result.created_at);
-        setText(result.values.ddPKaAW6DdKiddLrVcKYO_);
-        setTitle(result.values.ahj8kabsvcIPhcGxeWWQXB);
+        setDataTime(
+          format(new Date(result.updated_at), "MMMM d yyyy, 'at' H:m a")
+        );
+        setText(result.values.ddRe_cGtrcg4RcNSoTWOay);
+        setTitle(result.values.agA0ZdNh5cQ4oHBCojvSoI);
       } catch (error) {
         console.log(error.message);
       }
@@ -67,10 +74,10 @@ export const Workspace = () => {
         }
 
         const dataCreatePost = {
-          entity_id: "c6WPVcMsvcOOobw0ZcH8kY",
+          entity_id: VITE_API_ENTIPY,
           values: {
-            ddPKaAW6DdKiddLrVcKYO_: text,
-            ahj8kabsvcIPhcGxeWWQXB: title,
+            ddRe_cGtrcg4RcNSoTWOay: text,
+            agA0ZdNh5cQ4oHBCojvSoI: title,
           },
         };
 
@@ -101,10 +108,10 @@ export const Workspace = () => {
     if (id) {
       const newData = {
         id,
-        entity_id: "c6WPVcMsvcOOobw0ZcH8kY",
+        entity_id: VITE_API_ENTIPY,
         values: {
-          ddPKaAW6DdKiddLrVcKYO_: text,
-          ahj8kabsvcIPhcGxeWWQXB: title,
+          ddRe_cGtrcg4RcNSoTWOay: text,
+          agA0ZdNh5cQ4oHBCojvSoI: title,
         },
       };
       await updateNote(newData);
@@ -113,23 +120,25 @@ export const Workspace = () => {
     }
   };
   return (
-    <div className="workspace content">
-      <p>{dataTime}</p>
+    <div className={styles.workspace}>
+      <p className={styles.workspace__data_text}>{dataTime}</p>
       <input
         type="text"
         value={title}
-        className="workspace__input"
+        className={styles.workspace__input}
         onChange={inputChange}
         onBlur={handleBlur}
+        placeholder="Name"
       />
       <textarea
-        className="workspace__text"
+        className={styles.workspace__text}
         value={text}
         onChange={textareaChange}
         onBlur={handleBlur}
+        placeholder="Description"
       ></textarea>
 
-      {id && (
+      {modalToggle && (
         <Modal>
           <div className={styles.wrapperBtn}>
             <h3 className={styles.title}>Are you sure you want to delete?</h3>
