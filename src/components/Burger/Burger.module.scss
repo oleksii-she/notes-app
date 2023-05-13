@@ -1,39 +1,34 @@
 .burger {
   position: absolute;
   right: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 18px;
+  transform-origin: 16px 11px;
+  float: left;
+  outline: 0;
+  border: 0;
+  padding: 12px;
+  background: none;
   cursor: pointer;
-  background: transparent;
-  border: none;
-  z-index: 9999;
+  z-index: 555;
+
   &__span {
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     display: block;
-    width: 18px;
-    height: 2px;
-    background-color: #000;
-    transition: transform 0.2s ease-out;
-
-    &:first-child {
-      transform-origin: top left;
-    }
-
-    &:last-child {
-      transform-origin: bottom left;
-    }
+    height: 5px;
+    margin-bottom: 7px;
+    background-color: black;
+    width: 40px;
   }
 }
 
 .open .burger__span:first-child {
-  transform: rotate(45deg);
+  transform: rotate(45deg) translate(10px, 10px);
 }
 
 .open .burger__span:nth-child(2) {
-  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .open .burger__span:last-child {
-  transform: rotate(-45deg);
+  transform: rotate(-45deg) translate(7px, -7px);
 }
